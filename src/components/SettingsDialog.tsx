@@ -302,16 +302,6 @@ export const SettingsDialog: React.FC<SettingsDialogProps> = ({
               )}
             </div>
           </div>
-
-          {/* Website link */}
-          <div className="pt-2 flex justify-center">
-            <button
-              onClick={() => api.openExternal('https://echobird.ai')}
-              className="text-[14px] font-mono font-medium text-cyber-text-secondary hover:text-cyber-text transition-colors flex items-center gap-1.5"
-            >
-              EchoBird <ExternalLink size={13} />
-            </button>
-          </div>
         </div>
       </div>
     </div>

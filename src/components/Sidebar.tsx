@@ -60,12 +60,13 @@ export const Sidebar = ({
   return (
     <nav className="w-64 flex flex-col px-6 pb-6">
       <div className="mb-7 flex items-center gap-2 overflow-hidden">
+        {/* Hide the bird icon for now, will be replaced with custom logo later */}
         <img
           src="/brand/bird.png"
           alt=""
           aria-hidden="true"
           draggable={false}
-          className="flex-shrink-0 h-7 w-7 select-none"
+          className="hidden flex-shrink-0 h-7 w-7 select-none"
         />
         <span className="brand-mark flex-shrink-0 text-cyber-text">{t('app.name')}</span>
         {updateAvailable && (
