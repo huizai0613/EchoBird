@@ -1,4 +1,4 @@
-﻿// English baseline translation (complete reference, fallback for all locales)
+// English baseline translation (complete reference, fallback for all locales)
 import { Translations } from './types';
 
 const en: Translations = {
@@ -138,7 +138,7 @@ const en: Translations = {
   'server.stdout': 'STDOUT',
   'server.selectFromPanel': 'select model from right panel',
   'server.awaitingInit': 'awaiting_server_init...',
-  'server.selectConfigStart': 'select model \u2192 configure \u2192 START',
+  'server.selectConfigStart': 'select model → configure → START',
   'server.tier.entry': 'Entry',
   'server.tier.recommended': 'Recommended',
   'server.tier.flagship': 'Flagship',
@@ -184,7 +184,7 @@ const en: Translations = {
     'A data-forwarding scheme provided by an API relay or API Router. Do not enable this when using third-party models (e.g. DeepSeek / Qwen)!',
   'agent.codexResponsesLabel': 'Responses',
   'agent.codexResponsesHint':
-    'Enable this if your third-party model supports the Responses protocol for native integration. (Carefully read the official documentation of the model you purchased to confirm whether it supports the Responses protocol.)',
+    'Enable this if your third-party model supports the Responses protocol for native integration. (Carefully read the official documentation of the model you purchased to confirm whether it supports...',
   'agent.installViaMother': 'AI Auto-Install',
   // ToolCard labels
   'tool.models': 'Models',
@@ -279,7 +279,7 @@ const en: Translations = {
   'error.noModelSelected': 'No model selected, please select a model first.',
   'error.requestFailed': 'Request failed, please try again.',
   'error.userCancelled': 'Cancelled.',
-  'app.name': 'EchoBird',
+  'app.name': 'ZhiyuYunshu',
   'mother.hintShowSpecs': 'Show server specs',
   'mother.hintShowSpecsLocal': 'Show local machine specs',
   'mother.hintTroubleshoot': '{agent} is not working, help me fix it',
@@ -291,9 +291,6 @@ const en: Translations = {
   'mother.hintInstallGit': 'Help me install Git',
   'mother.hintSetCodexLocale': 'Set Codex Desktop to English',
   'mother.hintUnlockCodexPlugins': 'Help me unlock Codex Desktop plugins',
-  // Intentionally empty: the Claude Chinese-patch chip is shown only for
-  // zh-Hans / zh-Hant. An empty label makes translate() fall through to the
-  // raw key, which the hint renderer treats as "no translation → hide".
   'mother.hintSetClaudeLocale': '',
   'mother.parasiteTipInstalled':
     "I'm an AI assistant — short memory, sharp install skills, here to launch you into AI. Once your Claude Code is configured with a model, pick it on the right to keep talking here.",

@@ -5,9 +5,6 @@ import {
   Cpu,
   Server,
   Activity,
-  Newspaper,
-  Star,
-  GraduationCap,
   FolderHeart,
 } from 'lucide-react';
 import { NavItem } from './NavItem';
@@ -18,9 +15,6 @@ declare const __APP_EDITION__: string;
 const isFullEdition = __APP_EDITION__ === 'full';
 
 export type PageType =
-  | 'news'
-  | 'projects'
-  | 'courses'
   | 'models'
   | 'apps'
   | 'myProjects'
@@ -84,24 +78,6 @@ export const Sidebar = ({
         )}
       </div>
       <div className="flex-1 space-y-5 text-[15px]">
-        <NavItem
-          icon={<Newspaper size={20} />}
-          label={t('nav.news')}
-          active={activePage === 'news'}
-          onClick={() => onPageChange('news')}
-        />
-        <NavItem
-          icon={<Star size={20} />}
-          label={t('nav.projects')}
-          active={activePage === 'projects'}
-          onClick={() => onPageChange('projects')}
-        />
-        <NavItem
-          icon={<GraduationCap size={20} />}
-          label={t('nav.courses')}
-          active={activePage === 'courses'}
-          onClick={() => onPageChange('courses')}
-        />
         <NavItem
           icon={<Box size={20} />}
           label={t('nav.modelNexus')}

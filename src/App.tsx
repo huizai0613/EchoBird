@@ -2,6 +2,7 @@
 // Layout matches the original v1.1.0 structure exactly.
 // Pages extracted to src/pages/ with Provider pattern.
 // All Providers are always mounted; pages are shown/hidden via CSS to avoid remounting.
+// NOTE: AI News, Star Projects, and AI Courses tabs have been hidden for ZhiyuYunshu edition
 
 import { useState, useEffect } from 'react';
 import { RotateCcw } from 'lucide-react';
@@ -46,19 +47,6 @@ import {
   LocalServerBottom,
 } from './pages/LocalServer';
 import { MotherAgentProvider, MotherAgentMain, MotherAgentPanel } from './pages/MotherAgent';
-import {
-  AiPulseProvider,
-  AiPulseTitleActions,
-  AiNewsMain,
-  AiProjectsMain,
-  AiPulsePanel,
-} from './pages/AiPulse';
-import {
-  AiCoursesProvider,
-  AiCoursesTitleActions,
-  AiCoursesMain,
-  AiCoursesPanel,
-} from './pages/AiCourses';
 import { FeedbackMain } from './pages/Feedback';
 import { MyProjectsMain, MyProjectsPanel, MyProjectsBottom } from './pages/MyProjects';
 import { useMyProjectsStore } from './stores/myProjectsStore';
@@ -217,164 +205,119 @@ function App() {
           {/* All Providers always mounted — only CSS hidden changes */}
           <MotherAgentProvider>
             <ModelNexusProvider>
-              <AiPulseProvider>
-                <AiCoursesProvider>
-                  <AppManagerProvider>
-                    <LocalServerProvider>
-                      <div
-                        className={`flex flex-col h-screen w-full bg-cyber-bg overflow-hidden ${isMaximized || IS_MACOS ? '' : 'rounded-xl'}`}
-                      >
-                        {/* Title bar */}
-                        <TitleBar
-                          onSettingsClick={() => setShowSettings(true)}
-                          onFeedbackClick={() => setActivePage('feedback')}
-                        />
-                        <div className="flex flex-1 overflow-hidden text-cyber-text font-sans p-4 gap-0 relative isolate">
-                          {/* Sidebar */}
-                          <SidebarConnected onSettingsClick={() => setShowSettings(true)} />
+              <AppManagerProvider>
+                <LocalServerProvider>
+                  <div
+                    className={`flex flex-col h-screen w-full bg-cyber-bg overflow-hidden ${isMaximized || IS_MACOS ? '' : 'rounded-xl'}`}
+                  >
+                    {/* Title bar */}
+                    <TitleBar
+                      onSettingsClick={() => setShowSettings(true)}
+                      onFeedbackClick={() => setActivePage('feedback')}
+                    />
+                    <div className="flex flex-1 overflow-hidden text-cyber-text font-sans p-4 gap-0 relative isolate">
+                      {/* Sidebar */}
+                      <SidebarConnected onSettingsClick={() => setShowSettings(true)} />
 
-                          {/* Main content wrapper — transparent against page bg, Claude-style */}
-                          <div className="flex-1 flex flex-col overflow-hidden">
-                            {/* Main + Right panel row */}
-                            <div className="flex-1 flex gap-3 overflow-hidden">
-                              <main className="flex-1 flex flex-col overflow-hidden">
-                                <section className="flex-1 flex flex-col overflow-hidden pr-2">
-                                  {/* Shared page title bar — fixed-height row so the title sits at the same baseline whether the page has tall action buttons or none */}
-                                  <div className="mb-5 flex-shrink-0 flex items-center gap-3 h-10">
-                                    <div className="flex items-baseline gap-3 flex-1 min-w-0">
-                                      <h2 className="cjk-title flex-shrink-0">
-                                        {is('news') && t('page.news')}
-                                        {is('projects') && t('page.projects')}
-                                        {is('courses') && t('page.courses')}
-                                        {is('models') && t('page.modelNexus')}
+                      {/* Main content wrapper — transparent against page bg, Claude-style */}
+                      <div className="flex-1 flex flex-col overflow-hidden">
+                        {/* Main + Right panel row */}
+                        <div className="flex-1 flex gap-3 overflow-hidden">
+                          <main className="flex-1 flex flex-col overflow-hidden">
+                            <section className="flex-1 flex flex-col overflow-hidden pr-2">
+                              {/* Shared page title bar — fixed-height row so the title sits at the same baseline whether the page has tall action buttons or none */}
+                              <div className="mb-5 flex-shrink-0 flex items-center gap-3 h-10">
+                                <div className="flex items-baseline gap-3 flex-1 min-w-0">
+                                  <h2 className="cjk-title flex-shrink-0">
+                                    {is('models') && t('page.modelNexus')}
 
-                                        {is('apps') && t('page.appManager')}
-                                        {is('myProjects') && t('page.myProjects')}
-                                        {is('localLlm') && t('page.localServer')}
-                                        {is('mother') && t('page.motherAgent')}
-                                        {is('feedback') && t('page.feedback')}
-                                      </h2>
-                                      <div className="page-kicker truncate" aria-hidden="true">
-                                        {is('news') && 'PULSE'}
-                                        {is('projects') && 'RISING'}
-                                        {is('courses') && 'ACADEMY'}
-                                        {is('models') && 'ROSTER'}
-                                        {is('apps') && 'STUDIO'}
-                                        {is('myProjects') && 'VIBE CODING'}
-                                        {is('localLlm') && 'RUNTIME'}
-                                        {is('mother') && 'AGENT'}
-                                        {is('feedback') && 'SUPPORT'}
-                                      </div>
-                                    </div>
-                                    {/* Title actions — always mounted but hidden */}
-
-                                    <span className={page(is('news') || is('projects'))}>
-                                      <AiPulseTitleActions />
-                                    </span>
-                                    <span className={page(is('courses'))}>
-                                      <AiCoursesTitleActions />
-                                    </span>
-                                    <span className={page(is('models'))}>
-                                      <ModelNexusTitleActions />
-                                    </span>
-
-                                    {is('mother') && (
-                                      <div className="ml-auto flex-shrink-0 flex items-center gap-2">
-                                        <button
-                                          onClick={() =>
-                                            window.dispatchEvent(new CustomEvent('clear-chat'))
-                                          }
-                                          className="text-sm px-3 py-1.5 border border-cyber-border/50 rounded-md text-cyber-text hover:bg-cyber-text/10 transition-colors flex items-center gap-2"
-                                        >
-                                          <RotateCcw size={13} />
-                                          {t('btn.clear')}
-                                        </button>
-                                      </div>
-                                    )}
+                                    {is('apps') && t('page.appManager')}
+                                    {is('myProjects') && t('page.myProjects')}
+                                    {is('localLlm') && t('page.localServer')}
+                                    {is('mother') && t('page.motherAgent')}
+                                    {is('feedback') && t('page.feedback')}
+                                  </h2>
+                                  <div className="page-kicker truncate" aria-hidden="true">
+                                    {is('models') && 'ROSTER'}
+                                    {is('apps') && 'STUDIO'}
+                                    {is('myProjects') && 'VIBE CODING'}
+                                    {is('localLlm') && 'RUNTIME'}
+                                    {is('mother') && 'AGENT'}
+                                    {is('feedback') && 'SUPPORT'}
                                   </div>
-
-                                  {/* Page content — always mounted, CSS hidden */}
-                                  <div className={pageScroll(is('news'))}>
-                                    <AiNewsMain />
-                                  </div>
-                                  <div className={pageScroll(is('projects'))}>
-                                    <AiProjectsMain />
-                                  </div>
-                                  <div className={pageScroll(is('courses'))}>
-                                    <AiCoursesMain />
-                                  </div>
-                                  <div className={pageScroll(is('models'))}>
-                                    <ModelNexusMain />
-                                  </div>
-
-                                  <div className={pageBlock(is('apps'))}>
-                                    <AppManagerMain />
-                                  </div>
-                                  <div className={pageBlock(is('myProjects'))}>
-                                    <MyProjectsMain />
-                                  </div>
-                                  <div className={pageBlock(is('localLlm'))}>
-                                    <LocalServerMain />
-                                  </div>
-                                  {/* MotherAgent: always mounted, hidden via CSS to preserve chat state */}
-                                  <div
-                                    className={`flex-1 flex flex-col overflow-hidden ${is('mother') ? '' : 'hidden'}`}
-                                  >
-                                    <MotherAgentMain />
-                                  </div>
-                                  <div className={pageScroll(is('feedback'))}>
-                                    <FeedbackMain />
-                                  </div>
-                                </section>
-                              </main>
-
-                              <aside className="w-80 flex flex-col">
-                                <div className={page(is('news') || is('projects'))}>
-                                  <AiPulsePanel variant={is('projects') ? 'projects' : 'news'} />
                                 </div>
-                                <div className={page(is('courses'))}>
-                                  <AiCoursesPanel />
-                                </div>
-                                <div className={page(is('models'))}>
-                                  <ModelNexusPanel />
-                                </div>
+                                {/* Title actions — always mounted but hidden */}
 
-                                <div className={page(is('apps') || is('myProjects'))}>
-                                  {useMyProjectsPanel ? <MyProjectsPanel /> : <AppManagerPanel />}
-                                </div>
-                                <div className={page(is('localLlm'))}>
-                                  <LocalServerPanel />
-                                </div>
-                                {/* MotherAgent panel: always mounted, hidden via CSS */}
-                                <div className={!is('mother') ? 'hidden' : 'contents'}>
-                                  <MotherAgentPanel />
-                                </div>
-                              </aside>
+                                <span className={page(is('models'))}>
+                                  <ModelNexusTitleActions />
+                                </span>
+                              </div>
+
+                              {/* Page content — always mounted, CSS hidden */}
+                              <div className={pageScroll(is('models'))}>
+                                <ModelNexusMain />
+                              </div>
+
+                              <div className={pageBlock(is('apps'))}>
+                                <AppManagerMain />
+                              </div>
+                              <div className={pageBlock(is('myProjects'))}>
+                                <MyProjectsMain />
+                              </div>
+                              <div className={pageBlock(is('localLlm'))}>
+                                <LocalServerMain />
+                              </div>
+                              {/* MotherAgent: always mounted, hidden via CSS to preserve chat state */}
+                              <div
+                                className={`flex-1 flex flex-col overflow-hidden ${is('mother') ? '' : 'hidden'}`}
+                              >
+                                <MotherAgentMain />
+                              </div>
+                              <div className={pageScroll(is('feedback'))}>
+                                <FeedbackMain />
+                              </div>
+                            </section>
+                          </main>
+
+                          <aside className="w-80 flex flex-col">
+                            <div className={page(is('models'))}>
+                              <ModelNexusPanel />
                             </div>
 
-                            {/* Bottom bars — always mounted, CSS hidden */}
                             <div className={page(is('apps') || is('myProjects'))}>
-                              {useMyProjectsPanel ? <MyProjectsBottom /> : <AppManagerBottom />}
+                              {useMyProjectsPanel ? <MyProjectsPanel /> : <AppManagerPanel />}
                             </div>
                             <div className={page(is('localLlm'))}>
-                              <LocalServerBottom />
+                              <LocalServerPanel />
                             </div>
+                            {/* MotherAgent panel: always mounted, hidden via CSS */}
+                            <div className={!is('mother') ? 'hidden' : 'contents'}>
+                              <MotherAgentPanel />
+                            </div>
+                          </aside>
+                        </div>
 
-                            {/* Download bar */}
-                            <div className="flex-shrink-0 pt-2">
-                              <DownloadBar />
-                            </div>
-                          </div>
+                        {/* Bottom bars — always mounted, CSS hidden */}
+                        <div className={page(is('apps') || is('myProjects'))}>
+                          {useMyProjectsPanel ? <MyProjectsBottom /> : <AppManagerBottom />}
+                        </div>
+                        <div className={page(is('localLlm'))}>
+                          <LocalServerBottom />
+                        </div>
+
+                        {/* Download bar */}
+                        <div className="flex-shrink-0 pt-2">
+                          <DownloadBar />
                         </div>
                       </div>
+                    </div>
+                  </div>
 
-                      {/* Modals */}
-                      <AddModelModal />
-                      <AppManagerErrorModal />
-                    </LocalServerProvider>
-                  </AppManagerProvider>
-                </AiCoursesProvider>
-              </AiPulseProvider>
+                  {/* Modals */}
+                  <AddModelModal />
+                  <AppManagerErrorModal />
+                </LocalServerProvider>
+              </AppManagerProvider>
             </ModelNexusProvider>
           </MotherAgentProvider>
 

@@ -1,4 +1,4 @@
-﻿// Simplified Chinese translation
+// Simplified Chinese translation
 import { Translations } from './types';
 const zhHans: Partial<Translations> = {
   'nav.news': 'AI 资讯',
@@ -245,7 +245,7 @@ const zhHans: Partial<Translations> = {
   'error.noModelSelected': '未选择模型，请先选择一个模型。',
   'error.requestFailed': '请求失败，请重试。',
   'error.userCancelled': '已取消。',
-  'app.name': 'EchoBird',
+  'app.name': '智宇云枢',
   'mother.hintShowSpecs': '查看服务器的硬件配置',
   'mother.hintShowSpecsLocal': '查看本机的硬件配置',
   'mother.hintTroubleshoot': '{agent} 不好用了，帮我修复',
